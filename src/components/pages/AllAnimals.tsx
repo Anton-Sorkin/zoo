@@ -1,8 +1,16 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { IAnimals } from "../../models/IAnimals";
+import {
+  HeaderStyling,
+  LinkStyling,
+  ParagrafStyling,
+} from "../styledComponents/AllTexts";
+import { ImageFixer } from "../styledComponents/Images";
 
-import { AllAnimalsWrapper } from "../styledComponents/Wrappers";
+import {
+  AllAnimalsWrapper,
+  EachAnimalWrapper,
+} from "../styledComponents/Wrappers";
 
 interface IAllAnimalsProps {
   animals: IAnimals[];
@@ -15,13 +23,22 @@ export const AllAnimals = (props: IAllAnimalsProps) => {
       <div>
         {props.animals.map((animalList) => {
           return (
-            <AllAnimalsWrapper key={animalList.id}>
-              <h1>{animalList.name}</h1>
-              <img src={animalList.imageUrl} alt={animalList.name} />
-              <p>{animalList.shortDescription}</p>
-              <Link to={`/animals/${animalList.id}`} key={animalList.id}>
-                Find out more!
-              </Link>
+            <AllAnimalsWrapper key={animalList.id} display={"flex"}>
+              <EachAnimalWrapper display="flex">
+                <HeaderStyling>{animalList.name}</HeaderStyling>
+
+                <ImageFixer
+                  src={animalList.imageUrl}
+                  alt={animalList.name}
+                  height="100%"
+                  width="100%"
+                />
+
+                <ParagrafStyling>{animalList.shortDescription}</ParagrafStyling>
+                <Link to={`/animals/${animalList.id}`} key={animalList.id}>
+                  <LinkStyling>See more</LinkStyling>
+                </Link>
+              </EachAnimalWrapper>
             </AllAnimalsWrapper>
           );
         })}

@@ -2,6 +2,17 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { IAnimals } from "../../models/IAnimals";
+import {
+  HeaderStyling,
+  LinkStyling,
+  LinkStylingFeed,
+  ParagrafStyling,
+} from "../styledComponents/AllTexts";
+import { SingleImageFixer } from "../styledComponents/Images";
+import {
+  SingleAnimalsWrapper,
+  SingleAnimalWrapper,
+} from "../styledComponents/Wrappers";
 
 export const SpecificAnimal = () => {
   let params = useParams();
@@ -45,14 +56,32 @@ export const SpecificAnimal = () => {
 
   return (
     <>
-      <div>
-        <h1>{animal?.name}</h1>
-        <img src={animal?.imageUrl} alt={animal?.name} />
-        <p>{animal?.longDescription}</p>
-        <button onClick={() => handleFeedAnimal()}>Change Status</button>
+      <SingleAnimalsWrapper display={"flex"}>
+        <SingleAnimalWrapper display={"flex"}>
+          <HeaderStyling>{animal?.name}</HeaderStyling>
+          <SingleImageFixer
+            src={animal?.imageUrl}
+            alt={animal?.name}
+            height="100%"
+            width="100%"
+          />
+          <ParagrafStyling>{animal?.longDescription}</ParagrafStyling>
+          {animal?.isFed ? <h1>Matad</h1> : <h1>Inte matad</h1>}
+          {animal?.isFed ? null : (
+            <LinkStylingFeed onClick={() => handleFeedAnimal()}>
+              Change Status
+            </LinkStylingFeed>
+          )}
 
-        <Link to={`/`}>Back to home</Link>
-      </div>
+          {animal?.isFed ? (
+            <h3>this animal was feed at: {animal.lastFed}</h3>
+          ) : null}
+
+          <Link to={`/`}>
+            <LinkStyling>Go back</LinkStyling>
+          </Link>
+        </SingleAnimalWrapper>
+      </SingleAnimalsWrapper>
     </>
   );
 };
